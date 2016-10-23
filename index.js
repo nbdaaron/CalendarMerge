@@ -129,9 +129,9 @@ app.get("/link", function(request, response){
       pc: makeid(),
       accessToken: null
     };
-    console.log(request.query.name);
+    //console.log(request.query.name);
     //console.log(url)
-    response.send("<meta http-equiv='refresh' content='3;url="+url+"' />You've successfully linked your calendar! You will be redirected to your dashboard in a few seconds. ");
+    response.send("<meta http-equiv='refresh' content='3;url="+url+"' />You've successfully joined! You will be asked to link your calendar in a few seconds. ");
     response.end();
 }
   else {
@@ -174,6 +174,7 @@ app.get("/dashboard", function(request, response){
     cronofy.listCalendars({
       accessToken: meetings[request.cookies.pos].people[i].accessToken
     }, function(err, response) {
+      if(err) throw err;
       console.log(response);
     });
   }
