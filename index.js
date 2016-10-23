@@ -211,7 +211,6 @@ app.get("/dashboard", function(request, response){
 app.get("/showtimes", function(request, response){
   var allEvents = [];
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
-    res+=("<li>"+meetings[request.cookies.pos].people[i].name+"</li>");
     var options = {
     access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
     tzid: "America/New_York",
