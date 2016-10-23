@@ -11,7 +11,7 @@ var options = {
   client_id: 'MzA5TxBOuqvvDBCRJgM5N6OML-YGF46N',
   client_secret: 'JZbEGG9V9Lv5_fyTUSkU8thP-NhyS4L-CYFb4nE0sU-Y5144p2rl2TsBVi50B8e_N9KhH5g3k4Hhttn5L-DwlQ',
   grant_type: 'authorization_code',
-  redirect_uri: 'http://damp-eyrie-89155.herokuapp.com/dashboard'
+  redirect_uri: 'http://damp-eyrie-89155.herokuapp.com/link'
 };
 
 
@@ -64,7 +64,7 @@ app.get("/dojoin", function(request, response){
   var meeting = null;
   var position = 0;
   for (var i=0;i<counter;i++) {
-    if (meetings[i].pw == "request.query.pw") {
+    if (meetings[i].pw == request.query.pw) {
       position = i;
       meeting = meetings[i];
       break;
@@ -75,14 +75,16 @@ app.get("/dojoin", function(request, response){
     response.send("Invalid Meeting. Click <a href='/'>here</a> to return.");
     response.end();
   }
-  response.cookie('pos', position, { maxAge: 900000, httpOnly: true });
-  response.cookie('id', request.query.pw , { maxAge: 900000, httpOnly: true });
-  response.cookie('person', meeting.curper++ , { maxAge: 900000, httpOnly: true });
-  response.writeHead(302, {
-  'Location': '/namecal'
-  //add other headers here...
+  else {
+    response.cookie('pos', position, { maxAge: 900000, httpOnly: true });
+    response.cookie('id', request.query.pw , { maxAge: 900000, httpOnly: true });
+    response.cookie('person', meeting.curper++ , { maxAge: 900000, httpOnly: true });
+    response.writeHead(302, {
+    'Location': '/namecal'
+    //add other headers here...
   });
-
+  response.end();
+  }
 });
 
 app.get("/docreate", function(request, response){
@@ -136,13 +138,13 @@ app.get("/link", function(request, response){
       client_secret: 'JZbEGG9V9Lv5_fyTUSkU8thP-NhyS4L-CYFb4nE0sU-Y5144p2rl2TsBVi50B8e_N9KhH5g3k4Hhttn5L-DwlQ',
       grant_type: 'authorization_code',
       code: request.query.code,
-      redirect_uri: 'http://damp-eyrie-89155.herokuapp.com/dashboard'
+      redirect_uri: 'http://damp-eyrie-89155.herokuapp.com/link'
     };
-    meetings[request.cookies.pos].
+
 
     cronofy.requestAccessToken(options)
       .then(function(response){
-        console.log(response);
+        meetings[request.cookies.pos].people[request.cookies.person].accessToken = response;
       });
     response.send("You did it!");
 
@@ -159,8 +161,18 @@ app.get("/debug", function(request, response){
 
 app.get("/dashboard", function(request, response){
 
-  response.send(meetings);
+  var res = "";
+  res += "<html><head><title>My Dashboard</title></head><body>"
+  res += meetings;
+  res += "<h1>My Dashboard</h1><h3>My group code: " + meetings[request.cookies.pos].pw;
+  res+= "</h3><h3>My group members: </h3><ol>";
 
+  for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
+    res+=("<li>"+meetings[request.cookies.pos].people[i].name+"</li>");
+  }
+  res+=("</ol></body></html>");
+
+  response.send(res);
   //response.sendFile(__dirname+'/dashboard.html');
 
 });
