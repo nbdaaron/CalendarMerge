@@ -131,10 +131,7 @@ app.get("/link", function(request, response){
     };
     console.log(request.query.name);
     //console.log(url)
-    response.writeHead(302, {
-    'Location': url
-    //add other headers here...
-    });
+    response.send("<meta http-equiv='refresh' content='3;url="+url+"' />You've successfully linked your calendar! You will be redirected to your dashboard in a few seconds. ");
     response.end();
 }
   else {
@@ -174,6 +171,11 @@ app.get("/dashboard", function(request, response){
 
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
     res+=("<li>"+meetings[request.cookies.pos].people[i].name+"</li>");
+    cronofy.listCalendars({
+      accessToken: meetings[request.cookies.pos].people[i].accessToken
+    }, function(err, response) {
+      console.log(response);
+    });
   }
   res+=("</ol></body></html>");
 
