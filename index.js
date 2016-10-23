@@ -14,8 +14,6 @@ var options = {
   redirect_uri: 'http://damp-eyrie-89155.herokuapp.com/link'
 };
 
-
-
 var oauth2Client = new OAuth2(
   '769575086385-820j29odvj9bqvc6okejaqk0v8l4s9tm.apps.googleusercontent.com',
   'fEKLckkgGp46eJ1_7IoTzSYU',
@@ -62,23 +60,30 @@ app.get("/return", function(request, response){
 
 app.get("/dojoin", function(request, response){
   var meeting = null;
-  var position = 0;
+  var position = -1;
+  var personnumber = -1;
   for (var i=0;i<counter;i++) {
     if (meetings[i].pw == request.query.pw) {
-      position = i;
-      meeting = meetings[i];
-      break;
+      for (var j=0;j<meetings[i].curper;j++) {
+        if (meetings[i].people[j].pc == request.query.pc) {
+          position = i;
+          meeting = meetings[i];
+          personnumber = j;
+          break;
+        }
+      }
+
     }
   }
 
   if (meeting == null) {
-    response.send("Invalid Meeting. Click <a href='/'>here</a> to return.");
+    response.send("Invalid Group/Personal Code. Click <a href='/'>here</a> to return.");
     response.end();
   }
   else {
     response.cookie('pos', position, { maxAge: 900000, httpOnly: true });
     response.cookie('id', request.query.pw , { maxAge: 900000, httpOnly: true });
-    response.cookie('person', meeting.curper++ , { maxAge: 900000, httpOnly: true });
+    response.cookie('person',  personnumber, { maxAge: 900000, httpOnly: true });
     response.writeHead(302, {
     'Location': '/namecal'
     //add other headers here...
@@ -90,7 +95,7 @@ app.get("/dojoin", function(request, response){
 app.get("/docreate", function(request, response){
   //console.log(request.query.a);
   meetings[counter] = {       //STRUCTURE OF MEETING OBJECTS
-    name: request.query.a,    //NAME OF MEETING
+    name: request.query.name,    //NAME OF MEETING
     starttime: 0,             //MEETING START TIME
     endtime: 10,              //MEETING ENDING TIME
     pw: makeid(),             //MAKE RANDOM PASS ID
@@ -123,6 +128,7 @@ app.get("/link", function(request, response){
   if (request.query.code == "" || request.query.code==null ) {
     meetings[request.cookies.pos].people[request.cookies.person] = {
       name: request.query.name,
+      pc: makeid(),
       accessToken: null
     };
     console.log(url)
@@ -146,7 +152,7 @@ app.get("/link", function(request, response){
       .then(function(response){
         meetings[request.cookies.pos].people[request.cookies.person].accessToken = response;
       });
-    response.send("You did it!");
+    response.send("<meta http-equiv='refresh' content='3;url=dashboard' />You've successfully linked your calendar! You will be redirected to your dashboard in a few seconds. ");
 
   }
 
@@ -165,6 +171,7 @@ app.get("/dashboard", function(request, response){
   res += "<html><head><title>My Dashboard</title></head><body>"
   res += meetings;
   res += "<h1>My Dashboard</h1><h3>My group code: " + meetings[request.cookies.pos].pw;
+  res += "</h3><h3>My personal code: " + meetings[request.cookies.pos].people[request.cookies.person].pc;
   res+= "</h3><h3>My group members: </h3><ol>";
 
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
