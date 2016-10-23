@@ -209,7 +209,7 @@ app.get("/dashboard", function(request, response){
 });
 
 app.get("/showtimes", function(request, response){
-  var allEvents = [];
+  var allEvents = [{test: 1, test2: 2}];
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
     var options = {
     access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
