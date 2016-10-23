@@ -5,6 +5,10 @@ var meetings = [];
 var counter=0;
 
 app.use(cookieParser());
+app.use(express.static(__dirname + '/images'));
+app.use(express.static(__dirname + '/css'));
+app.use(express.static(__dirname + '/js'));
+app.use(express.static(__dirname + '/fonts'));
 
 app.get("/", function(request, response){
   response.sendFile(__dirname+'/calverge.html');
@@ -19,6 +23,12 @@ app.get("/create", function(request, response){
 app.get("/join", function(request, response){
 
   response.sendFile(__dirname+'/calvergejoingroup.html');
+
+});
+
+app.get("/return", function(request, response){
+
+  response.sendFile(__dirname+'/calvergeReturningUser.html');
 
 });
 
