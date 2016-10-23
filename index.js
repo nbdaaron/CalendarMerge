@@ -195,9 +195,9 @@ app.get("/dashboard", function(request, response){
 
   cronofy.readEvents(options)
     .then(function (response) {
-        console.log(response.events[0]);
-        console.log(response.events[1]);
-        console.log(response.events[2]);
+        for (var counter=0;counter<response.events.length;counter++) {
+          console.log(response.events[counter]);
+        }
     });
   }
   res+=("</ol><a href='showtimes'>Show Times</a></body></html>");
