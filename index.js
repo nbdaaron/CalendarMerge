@@ -253,7 +253,7 @@ app.get("/showtimes", function(request, response){
     while (curmin < new Date('2016-10-31')) {
         var max = curmin;
         while (max < allEvents[eventscounter].start) {
-          max = newDate(max.valueOf() + 300000);
+          max = new Date(max.valueOf() + 300000);
         }
         if (max.valueOf() - curmin.valueOf() >= 1000*60*60) {
           meetingTimes[datecounter++] = {
