@@ -36,6 +36,10 @@ app.use(express.static(__dirname + '/css'));
 app.use(express.static(__dirname + '/js'));
 app.use(express.static(__dirname + '/fonts'));
 
+
+
+
+
 app.get("/", function(request, response){
   response.sendFile(__dirname+'/calverge.html');
 });
@@ -172,17 +176,16 @@ app.get("/dashboard", function(request, response){
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
     res+=("<li>"+meetings[request.cookies.pos].people[i].name+"</li>");
     var options = {
-        access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
-        tzid: 'US-Eastern',
-        from: '2016-10-23',
-        to: '2016-10-30'
-    };
+    access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
+    tzid: "America/New_York",
+    from: '2016-10-23',
+    to: '2016-10-31'
+  };
 
-    cronofy.readEvents(options)
-        .then(function (response) {
-            var events = response.events;
-            console.log(events);
-        });
+  cronofy.readEvents(options)
+    .then(function (response) {
+        console.log(response);
+    });
   }
   res+=("</ol></body></html>");
 
