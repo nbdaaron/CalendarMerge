@@ -39,7 +39,6 @@ app.use(express.static(__dirname + '/fonts'));
 
 
 
-
 app.get("/", function(request, response){
   response.sendFile(__dirname+'/calverge.html');
 });
@@ -184,7 +183,7 @@ app.get("/dashboard", function(request, response){
 
   cronofy.readEvents(options)
     .then(function (response) {
-        console.log(response);
+        res+=response;
     });
   }
   res+=("</ol></body></html>");
