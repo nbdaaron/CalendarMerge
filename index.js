@@ -246,6 +246,8 @@ app.get("/showtimes", function(request, response){
     return 0;
 });
 
+  console.log("Dates sorted");
+
     var meetingTimes = [];
     var curmin = new Date('2016-10-23');
     var datecounter= 0;
@@ -256,6 +258,7 @@ app.get("/showtimes", function(request, response){
           max = new Date(max.valueOf() + 300000);
         }
         if (max.valueOf() - curmin.valueOf() >= 1000*60*60) {
+                  console.log("Match " + (datecounter+1));
           meetingTimes[datecounter++] = {
             from: curmin,
             to: max,
@@ -265,6 +268,7 @@ app.get("/showtimes", function(request, response){
         if (eventscounter+1 != allEvents.length)
           min = allEvents[eventscounter++].end;
     }
+    console.log("Exiting loop");
 
       var res = '<html><head><title>Findings</title></head><link href="bootstrap.css" rel="stylesheet" ><body>';
       res += '<div id="push"></div><div align="center"> <a href="/" > <img src= "calvergelogo.png" > </img> </a> </div>';
@@ -274,7 +278,7 @@ app.get("/showtimes", function(request, response){
         res += '<li>'+meetingTimes[counter].from+' to ' + meetingTimes[counter].to + '</li>';
       }
       res += '</ul></div></body></html>';
-
+      console.log("Sending page");
       response.send(res);
       response.end();
     }
