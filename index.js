@@ -236,13 +236,13 @@ app.get("/showtimes", function(request, response){
         }
 
     }).then(function() {
-      if (i == meetings[request.cookies.pos].cuper-1) {
+      if (i == meetings[request.cookies.pos].curper-1) {
       response.send(allEvents);
       response.end();
     }
     else {
       console.log(i);
-      console.log(meetings[request.cookies.pos].cuper-1);
+      console.log(meetings[request.cookies.pos].curper-1);
     }
     });
 
