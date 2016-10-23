@@ -209,7 +209,9 @@ app.get("/dashboard", function(request, response){
 });
 
 app.get("/showtimes", function(request, response){
-  var allEvents = [{test: 1, test2: 2}];
+  var allEvents = [];
+  allEvents[0] = 1;
+  allEvents[1] = 3;
   var oc=0;
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
     var options = {
@@ -222,6 +224,7 @@ app.get("/showtimes", function(request, response){
   cronofy.readEvents(options)
     .then(function (response) {
         for (var counter=0;counter<response.events.length;counter++) {
+          allEvents[2] = 5;
           allEvents[oc]= oc;
           oc++;
           console.log(response.events[counter].start);
