@@ -210,6 +210,7 @@ app.get("/dashboard", function(request, response){
 
 app.get("/showtimes", function(request, response){
   var allEvents = [{test: 1, test2: 2}];
+  var oc=0;
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
     var options = {
     access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
@@ -221,10 +222,11 @@ app.get("/showtimes", function(request, response){
   cronofy.readEvents(options)
     .then(function (response) {
         for (var counter=0;counter<response.events.length;counter++) {
-          allEvents[allEvents.length]= {
+          allEvents[oc]= {
             start:    response.events[counter].start,
             end:      response.events[counter].end
           };
+          oc++;
           console.log(response.events[counter].start);
           console.log(response.events[counter].end);
           console.log(allEvents[allEvents.length] + "hi");
