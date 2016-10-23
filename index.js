@@ -171,12 +171,18 @@ app.get("/dashboard", function(request, response){
 
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
     res+=("<li>"+meetings[request.cookies.pos].people[i].name+"</li>");
-    cronofy.listCalendars({
-      accessToken: meetings[request.cookies.pos].people[i].accessToken
-    }, function(err, response) {
-      if(err) throw err;
-      console.log(response);
-    });
+    var options = {
+        access_token: meetings[request.cookies.pos].people[i].accessToken,
+        tzid: 'US-Eastern',
+        from: '2016-10-23',
+        to: '2016-10-30'
+    };
+
+    cronofy.readEvents(options)
+        .then(function (response) {
+            var events = response.events;
+            console.log(events);
+        });
   }
   res+=("</ol></body></html>");
 
