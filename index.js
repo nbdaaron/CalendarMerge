@@ -210,8 +210,11 @@ app.get("/dashboard", function(request, response){
 
 
   var res = "";
-  res += "<html><head><title>My Dashboard</title></head><body>"
-  res += "<h1>My Dashboard</h1><h3>My group code: " + meetings[request.cookies.pos].pw;
+res += '<html xmlns="http://www.w3.org/1999/xhtml"><head><style>div#push{padding-top:40px;}</style><link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" >';
+res += '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+res += '<title>Dashboard</title></head><body><div id="push"></div><div align="center"> <a href="calverge.html" > <img src= "calvergelogo.png" > </img> </a> </div>';
+res += '<div class= "container"><h1 align="center">Dashboard</h1>'
+  res += "<h3>My group code: " + meetings[request.cookies.pos].pw;
   res += "</h3><h3>My personal code: " + meetings[request.cookies.pos].people[request.cookies.person].pc;
   res+= "</h3><h3>My group members: </h3><ol>";
 
@@ -231,7 +234,7 @@ app.get("/dashboard", function(request, response){
         }
     });
   }
-  res+=("</ol><a href='showtimes'>Show Times</a></body></html>");
+  res+=("</ol><a class='button' href='showtimes'>Show Times when we can meet</a></body></html>");
 
   response.send(res);
   //response.sendFile(__dirname+'/dashboard.html');
