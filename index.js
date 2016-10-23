@@ -172,7 +172,7 @@ app.get("/dashboard", function(request, response){
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
     res+=("<li>"+meetings[request.cookies.pos].people[i].name+"</li>");
     var options = {
-        access_token: meetings[request.cookies.pos].people[i].accessToken,
+        access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
         tzid: 'US-Eastern',
         from: '2016-10-23',
         to: '2016-10-30'
