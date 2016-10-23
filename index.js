@@ -225,7 +225,8 @@ app.get("/showtimes", function(request, response){
             start:    response.events[counter].start,
             end:      response.events[counter].end
           };
-          console.log(response.events[counter]);
+          console.log(response.events[counter].start);
+          console.log(response.events[counter].end);
           console.log(allEvents[allEvents.length] + "hi");
         }
     });
