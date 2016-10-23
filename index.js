@@ -235,8 +235,15 @@ app.get("/showtimes", function(request, response){
           console.log(allEvents[allEvents.length] + "hi");
         }
 
-    }).then(function() {  response.send(allEvents);
+    }).then(function() {
+      if (i == meetings[request.cookies.pos].cuper-1) {
+      response.send(allEvents);
       response.end();
+    }
+    else {
+      console.log(i);
+      console.log(meetings[request.cookies.pos].cuper-1);
+    }
     });
 
   }
