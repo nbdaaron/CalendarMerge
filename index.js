@@ -241,8 +241,7 @@ app.get("/showtimes", function(request, response){
       response.end();
     }
     else {
-      console.log(i);
-      console.log(meetings[request.cookies.pos].curper-1);
+      console.log(i + " and " + meetings[request.cookies.pos].curper-1);
     }
     });
 
