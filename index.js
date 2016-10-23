@@ -303,14 +303,15 @@ app.get("/showtimes", function(request, response){
     }
     console.log("Exiting loop");
 
-      var res = '<html><head><title>Findings</title></head><link href="bootstrap.css" rel="stylesheet" ><body>';
-      res += '<div id="push"></div><div align="center"> <a href="/" > <img src= "calvergelogo.png" > </img> </a> </div>';
-      res += '<div class= "container"><p>Here are the most possible times that you can meet based off our findings. To confirm one, please click the link that works best for you</p>';
-      res += '<ul id="possible times">';
+      var res = '<html xmlns="http://www.w3.org/1999/xhtml"> <head>      <style>      div#push{padding-top:40px; } select#size{      	width:10%;      	display:inline-block;      	}      div#pad{      	padding:3px 3px      	}            </style>      <link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" >      <link href="http://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />      <title>findings</title>      </head>      <body>            <script type="text/javascript">(function () { if (window.addtocalendar)if(typeof window.addtocalendar.start == "function")return;      if (window.ifaddtocalendar == undefined) { window.ifaddtocalendar = 1;';
+      res += "var d = document, s = d.createElement('script'), g = 'getElementsByTagName';      s.type = 'text/javascript';s.charset = 'UTF-8';s.async = true;      s.src = ('https:' == window.location.protocol ? 'https' : 'http')+'://addtocalendar.com/atc/1.5/atc.min.js';      var h = d[g]('body')[0];h.appendChild(s); }})();</script>";
+      res += '<div id="push"></div>      <div align="center"> <a href="calverge.html" > <img src= "calvergelogo.png" > </img> </a> </div>      <div class= "container">         <p>Here are the most possible times that you can meet based off our findings. To confirm one, please click the link that works best for you</p>         <ul id="possible times">';
       for (var counter=0;counter<meetingTimes.length;counter++) {
-        res += '<li>'+meetingTimes[counter].from.toLocaleString()+' to ' + meetingTimes[counter].to.toLocaleString() + '</li>';
-      }
-      res += '</ul></div></body></html>';
+        //res += '<li>'+meetingTimes[counter].from.toLocaleString()+' to ' + meetingTimes[counter].to.toLocaleString() + '</li>';
+        res += '<li> <div id= "pad">'+ meetingTimes[counter].from.toLocaleString()+' to ' + meetingTimes[counter].to.toLocaleString() +'<span class="addtocalendar atc-style-blue">          <var class="atc_event">              <var class="atc_date_start1">'+meetingTimes[counter].from.toLocaleString()+'</var>              <var class="atc_date_end1"> '+meetingTimes[counter].to.toLocaleString()+' </var>              <var class="atc_timezone1"> '+"America/New_York"+'</var>          </var>             </span>              </div>              </li>';
+            }
+            res += '</ul>         </div>         </body>         </html>';
+      //res += '</ul></div></body></html>';
       console.log("Sending page");
       response.send(res);
       response.end();
