@@ -226,8 +226,8 @@ app.get("/showtimes", function(request, response){
         for (var counter=0;counter<response2.events.length;counter++) {
           allEvents[2] = 5;
           allEvents[oc]= {
-            start:response2.events[counter].start,
-            end:response2.events[counter].end
+            start:new Date(response2.events[counter].start),
+            end: new Date(response2.events[counter].end)
           };
           oc++;
           console.log(response2.events[counter].start);
@@ -237,7 +237,46 @@ app.get("/showtimes", function(request, response){
 
     }).then(function() {
       if (i == meetings[request.cookies.pos].curper) {
-      response.send(allEvents);
+
+        allEvents.sort(function(a, b){ //sort dates
+    var keyA = new Date(a.start),
+        keyB = new Date(b.start);
+    // Compare the 2 dates
+    if(keyA < keyB) return -1;
+    if(keyA > keyB) return 1;
+    return 0;
+});
+
+    var meetingTimes = [];
+    var curmin = new Date('2016-10-23');
+    var datecounter= 0;
+    var eventscounter = 0;
+    while (curmin < new Date('2016-10-31')) {
+        var max = curmin;
+        while (max < allEvents[eventcounter].start) {
+          max = newDate(max.valueOf() + 300000);
+        }
+        if (max.valueOf() - curmin.valueOf() >= 1000*60*60) {
+          meetingTimes[datecounter++] = {
+            from: curmin,
+            to: max,
+            time: max.valueOf() - curmin.valueOf() //Time in millis
+          };
+        }
+        if (eventscounter+1 != allEvents.length)
+          min = allEvents[eventscounter++].end;
+    }
+
+      var res = '<html><head><title>Findings</title></head><link href="bootstrap.css" rel="stylesheet" ><body>';
+      res += '<div id="push"></div><div align="center"> <a href="/" > <img src= "calvergelogo.png" > </img> </a> </div>';
+      res += '<div class= "container"><p>Here are the most possible times that you can meet based off our findings. To confirm one, please click the link that works best for you</p>';
+      res += '<ul id="possible times">';
+      for (var counter=0;counter<meetingTimes.length;counter++) {
+        res += '<li>'+meetingTimes[counter].from+' to ' + meetingTimes[counter].to + '</li>';
+      }
+      res += '</ul></div></body></html>';
+
+      response.send(res);
       response.end();
     }
     else {
