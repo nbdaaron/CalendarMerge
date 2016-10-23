@@ -233,14 +233,11 @@ app.get("/showtimes", function(request, response){
           console.log(response2.events[counter].start);
           console.log(response2.events[counter].end);
           console.log(allEvents[allEvents.length] + "hi");
-
-
         }
 
-    }.then(function() {
-      response.send(allEvents);
+    }).then(function() {  response.send(allEvents);
       response.end();
-    }));
+    });
 
   }
 
