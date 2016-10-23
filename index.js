@@ -30,7 +30,7 @@ var oauth2Client = new OAuth2(
   scope: 'https://www.googleapis.com/auth/calendar'
 });*/
 
-var url= "https://app.cronofy.com/oauth/authorize?response_type=code&client_id="+options.clientid+"&redirect_uri="+options.redirect_uri+"&scope=read_events";
+var url= "https://app.cronofy.com/oauth/authorize?response_type=code&client_id="+options.client_id+"&redirect_uri="+options.redirect_uri+"&scope=read_events";
 
 app.use(cookieParser());
 app.use(express.static(__dirname + '/images'));
