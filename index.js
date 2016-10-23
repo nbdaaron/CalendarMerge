@@ -225,14 +225,19 @@ app.get("/showtimes", function(request, response){
     .then(function (response2) {
         for (var counter=0;counter<response2.events.length;counter++) {
           allEvents[2] = 5;
-          allEvents[oc]= oc;
+          allEvents[oc]= {
+            start=response2.events[counter].start,
+            end=response2.events[counter].end
+          };
           oc++;
           console.log(response2.events[counter].start);
           console.log(response2.events[counter].end);
           console.log(allEvents[allEvents.length] + "hi");
-          response.send(allEvents);
-          response.end();
         }
+        if (i==meetings[request.cookies.pos].curper-1) {
+        response.send(allEvents);
+        response.end();
+      }
     });
 
   }
