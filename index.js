@@ -232,7 +232,6 @@ app.get("/showtimes", function(request, response){
           oc++;
           console.log(response2.events[counter].start);
           console.log(response2.events[counter].end);
-          console.log(allEvents[allEvents.length] + "hi");
         }
 
     }).then(function() {
@@ -253,7 +252,7 @@ app.get("/showtimes", function(request, response){
     var eventscounter = 0;
     while (curmin < new Date('2016-10-31')) {
         var max = curmin;
-        while (max < allEvents[eventcounter].start) {
+        while (max < allEvents[eventscounter].start) {
           max = newDate(max.valueOf() + 300000);
         }
         if (max.valueOf() - curmin.valueOf() >= 1000*60*60) {
