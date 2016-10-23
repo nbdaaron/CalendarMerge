@@ -1,0 +1,22 @@
+{
+  "name": "calendarmerge",
+  "version": "1.0.0",
+  "description": "Merges Calendars",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "calendar",
+    "merge",
+    "group",
+    "meetings"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "request": "^2.75.0"
+  }
+}
