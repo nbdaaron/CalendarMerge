@@ -254,7 +254,7 @@ app.get("/showtimes", function(request, response){
     var eventscounter = 0;
     while (curmin < new Date('2016-10-31')) {
         var max = curmin;
-        while (max < allEvents[eventscounter].start) {
+        while (max < allEvents[eventscounter].start && max < new Date('2016-10-31')) {
           max = new Date(max.valueOf() + 300000);
         }
         if (max.valueOf() - curmin.valueOf() >= 1000*60*60) {
@@ -266,7 +266,7 @@ app.get("/showtimes", function(request, response){
           };
         }
         if (eventscounter+1 != allEvents.length)
-          min = allEvents[eventscounter++].end;
+          curmin = allEvents[eventscounter++].end;
     }
     console.log("Exiting loop");
 
