@@ -79,6 +79,36 @@ app.get("/dojoin", function(request, response){
   var personnumber = -1;
   for (var i=0;i<counter;i++) {
     if (meetings[i].pw == request.query.pw) {
+          position = i;
+          meeting = meetings[i];
+          personnumber = meetings[i].curper++;
+          break;
+
+    }
+  }
+
+  if (meeting == null) {
+    response.send("Invalid Group Code. Click <a href='/'>here</a> to return.");
+    response.end();
+  }
+  else {
+    response.cookie('pos', position, { maxAge: 900000, httpOnly: true });
+    response.cookie('id', request.query.pw , { maxAge: 900000, httpOnly: true });
+    response.cookie('person',  personnumber, { maxAge: 900000, httpOnly: true });
+    response.writeHead(302, {
+    'Location': '/namecal'
+    //add other headers here...
+  });
+  response.end();
+  }
+});
+
+app.get("/dorejoin", function(request, response){
+  var meeting = null;
+  var position = -1;
+  var personnumber = -1;
+  for (var i=0;i<counter;i++) {
+    if (meetings[i].pw == request.query.pw) {
       for (var j=0;j<meetings[i].curper;j++) {
         if (meetings[i].people[j].pc == request.query.pc) {
           position = i;
@@ -100,7 +130,7 @@ app.get("/dojoin", function(request, response){
     response.cookie('id', request.query.pw , { maxAge: 900000, httpOnly: true });
     response.cookie('person',  personnumber, { maxAge: 900000, httpOnly: true });
     response.writeHead(302, {
-    'Location': '/namecal'
+    'Location': '/dashboard'
     //add other headers here...
   });
   response.end();
