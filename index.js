@@ -308,7 +308,7 @@ app.get("/showtimes", function(request, response){
       res += '<div id="push"></div>      <div align="center"> <a href="calverge.html" > <img src= "calvergelogo.png" > </img> </a> </div>      <div class= "container">         <p>Here are the most possible times that you can meet based off our findings. To confirm one, please click the link that works best for you</p>         <ul id="possible times">';
       for (var counter=0;counter<meetingTimes.length;counter++) {
         //res += '<li>'+meetingTimes[counter].from.toLocaleString()+' to ' + meetingTimes[counter].to.toLocaleString() + '</li>';
-        res += '<li> <div id= "pad">'+ meetingTimes[counter].from.toLocaleString()+' to ' + meetingTimes[counter].to.toLocaleString() +'<span class="addtocalendar atc-style-blue">          <var class="atc_event">              <var class="atc_date_start1">'+meetingTimes[counter].from.toLocaleString()+'</var>              <var class="atc_date_end1"> '+meetingTimes[counter].to.toLocaleString()+' </var>              <var class="atc_timezone1"> '+"America/New_York"+'</var>          </var>             </span>              </div>              </li>';
+        res += '<li> <div id= "pad">'+ meetingTimes[counter].from.toLocaleString()+' to ' + meetingTimes[counter].to.toLocaleString() +'<span class="addtocalendar atc-style-blue">          <var class="atc_event">              <var class="atc_date_start1">'+format(meetingTimes[counter].from.toLocaleString())+'</var>              <var class="atc_date_end1"> '+format(meetingTimes[counter].to.toLocaleString())+' </var>              <var class="atc_timezone1"> '+"America/New_York"+'</var>          </var>             </span>              </div>              </li>';
             }
             res += '</ul>         </div>         </body>         </html>';
       //res += '</ul></div></body></html>';
@@ -340,4 +340,8 @@ function makeid()
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
+}
+
+function format(d) {
+  return d.substring(0, 2)+"-"d.substring(3,5)+"-"+d.substring(6, 19);
 }
