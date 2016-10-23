@@ -221,7 +221,10 @@ app.get("/showtimes", function(request, response){
   cronofy.readEvents(options)
     .then(function (response) {
         for (var counter=0;counter<response.events.length;counter++) {
-          allEvents[allEvents.length]= response.events[counter];
+          allEvents[allEvents.length]= {
+            start=    response.events[counter].start,
+            end=      response.events[counter].end
+          };
           console.log(response.events[counter]);
         }
     });
