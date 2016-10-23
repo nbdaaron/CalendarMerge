@@ -96,8 +96,6 @@ app.get("/docreate", function(request, response){
   //console.log(request.query.a);
   meetings[counter] = {       //STRUCTURE OF MEETING OBJECTS
     name: request.query.name,    //NAME OF MEETING
-    starttime: 0,             //MEETING START TIME
-    endtime: 10,              //MEETING ENDING TIME
     pw: makeid(),             //MAKE RANDOM PASS ID
     curper: 1,
     people: []
@@ -131,7 +129,8 @@ app.get("/link", function(request, response){
       pc: makeid(),
       accessToken: null
     };
-    console.log(url)
+    console.log(request.query.name);
+    //console.log(url)
     response.writeHead(302, {
     'Location': url
     //add other headers here...
@@ -161,7 +160,7 @@ app.get("/link", function(request, response){
 
 app.get("/debug", function(request, response){
   //response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.send(request.cookies);
+  response.send(meetings);
 
 });
 
@@ -169,7 +168,6 @@ app.get("/dashboard", function(request, response){
 
   var res = "";
   res += "<html><head><title>My Dashboard</title></head><body>"
-  res += meetings;
   res += "<h1>My Dashboard</h1><h3>My group code: " + meetings[request.cookies.pos].pw;
   res += "</h3><h3>My personal code: " + meetings[request.cookies.pos].people[request.cookies.person].pc;
   res+= "</h3><h3>My group members: </h3><ol>";
