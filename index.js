@@ -210,9 +210,9 @@ app.get("/dashboard", function(request, response){
 
 
   var res = "";
-res += '<html xmlns="http://www.w3.org/1999/xhtml"><head><style>div#push{padding-top:40px;}</style><link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" >';
+res += '<html xmlns="http://www.w3.org/1999/xhtml"><head><style>div#push{padding-top:40px;}</style><link href="bootstrap.css" rel="stylesheet" >';
 res += '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-res += '<title>Dashboard</title></head><body><div id="push"></div><div align="center"> <a href="calverge.html" > <img src= "calvergelogo.png" > </img> </a> </div>';
+res += '<title>Dashboard</title></head><body><div id="push"></div><div align="center"> <a href="" > <img src= "calvergelogo.png" > </img> </a> </div>';
 res += '<div class= "container"><h1 align="center">Dashboard</h1>'
   res += "<h3>My group code: " + meetings[request.cookies.pos].pw;
   res += "</h3><h3>My personal code: " + meetings[request.cookies.pos].people[request.cookies.person].pc;
@@ -343,5 +343,5 @@ function makeid()
 }
 
 function format(d) {
-  return d.substring(0, 2)+"-"+d.substring(3,5)+"-"+d.substring(6, 19);
+  return d.substring(6, 10)+"-"+d.substring(0,2)+"-"+d.substring(3, 5)+" "d.substring(13, d.length-2);
 }
