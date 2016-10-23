@@ -20,7 +20,7 @@
     "request": "^2.75.0"
   },
   "scripts": {
-    "start": "node your-script.js"
+    "start": "index.js"
 }
 
 }
