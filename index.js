@@ -37,6 +37,18 @@ app.use(express.static(__dirname + '/js'));
 app.use(express.static(__dirname + '/fonts'));
 
 
+var options = {
+access_token: 'oSLuzQlFyY8JVAQNMoOE7CWdmcIWG45l',
+tzid: "America/New_York",
+from: '2016-10-23',
+to: '2016-10-31'
+};
+
+cronofy.readEvents(options)
+.then(function (response) {
+    console.log(response);
+});
+
 
 
 app.get("/", function(request, response){
@@ -183,10 +195,10 @@ app.get("/dashboard", function(request, response){
 
   cronofy.readEvents(options)
     .then(function (response) {
-        res+=response;
+        console.log(response);
     });
   }
-  res+=("</ol></body></html>");
+  res+=("</ol><a href='showtimes'>Show Times</a></body></html>");
 
   response.send(res);
   //response.sendFile(__dirname+'/dashboard.html');
@@ -194,8 +206,24 @@ app.get("/dashboard", function(request, response){
 });
 
 app.get("/showtimes", function(request, response){
+  var allEvents = [];
+  for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
+    var options = {
+    access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
+    tzid: "America/New_York",
+    from: '2016-10-23',
+    to: '2016-10-31'
+  };
 
-  response.sendFile(__dirname+'/findings.html');
+  cronofy.readEvents(options)
+    .then(function (response) {
+        for (var j=0;j<response.events.length;j++) {
+          allEvents[allEvents.length] = response.events[j];
+        }
+    });
+  }
+  response.send(allEvents);
+  response.end();
 
 });
 
