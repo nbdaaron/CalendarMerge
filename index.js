@@ -286,8 +286,8 @@ app.get("/showtimes", function(request, response){
     var datecounter= 0;
     var eventscounter = 0;
     while (curmin < new Date('2016-10-31')) {
-        var max = curmin;
-        while (max < allEvents[eventscounter].start && max < new Date('2016-10-31')) {
+        var max = curmin.valueOf();
+        while (max < allEvents[eventscounter].start && max < new Date('2016-10-31') && (max.valueOf()-min.valueOf() <= 1800000)) {
           max = new Date(max.valueOf() + 300000);
         }
         if (max.valueOf() - curmin.valueOf() >= 1000*60*60) {
@@ -299,7 +299,7 @@ app.get("/showtimes", function(request, response){
           };
         }
         if (eventscounter+1 != allEvents.length)
-          curmin = allEvents[eventscounter++].end;
+          curmin = allEvents[eventscounter++].end.valueOf() + 900000;
     }
     console.log("Exiting loop");
 
@@ -343,5 +343,5 @@ function makeid()
 }
 
 function format(d) {
-  return d.substring(6, 10)+"-"+d.substring(0,2)+"-"+d.substring(3, 5)+" "+d.substring(13, d.length-2);
+  return d.substring(6, 10)+"-"+d.substring(0,2)+"-"+d.substring(3, 5)+" "+d.substring(11, d.length-2);
 }
