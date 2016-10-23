@@ -298,7 +298,7 @@ app.get("/showtimes", function(request, response){
             time: max.valueOf() - curmin.valueOf() //Time in millis
           };
         }
-        if (eventscounter+1 != allEvents.length)
+        if (eventscounter+1 != allEvents.length && allEvents[eventscounter].end != null)
           curmin = allEvents[eventscounter++].end.valueOf() + 900000;
     }
     console.log("Exiting loop");
