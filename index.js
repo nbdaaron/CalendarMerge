@@ -222,10 +222,8 @@ app.get("/showtimes", function(request, response){
   cronofy.readEvents(options)
     .then(function (response) {
         for (var counter=0;counter<response.events.length;counter++) {
-          allEvents[oc]= {
-            start:    response.events[counter].start,
-            end:      response.events[counter].end
-          };
+          allEvents[oc]= oc;
+        };
           oc++;
           console.log(response.events[counter].start);
           console.log(response.events[counter].end);
