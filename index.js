@@ -178,6 +178,7 @@ app.get("/debug", function(request, response){
 
 app.get("/dashboard", function(request, response){
 
+
   var res = "";
   res += "<html><head><title>My Dashboard</title></head><body>"
   res += "<h1>My Dashboard</h1><h3>My group code: " + meetings[request.cookies.pos].pw;
@@ -210,6 +211,7 @@ app.get("/dashboard", function(request, response){
 app.get("/showtimes", function(request, response){
   var allEvents = [];
   for (var i=0;i<meetings[request.cookies.pos].curper;i++) {
+    res+=("<li>"+meetings[request.cookies.pos].people[i].name+"</li>");
     var options = {
     access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
     tzid: "America/New_York",
@@ -219,8 +221,8 @@ app.get("/showtimes", function(request, response){
 
   cronofy.readEvents(options)
     .then(function (response) {
-        for (var j=0;j<response.events.length;j++) {
-          allEvents[allEvents.length] = response.events[j];
+        for (var counter=0;counter<response.events.length;counter++) {
+          console.log(response.events[counter]);
         }
     });
   }
