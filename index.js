@@ -1,8 +1,24 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
+var google = require('googleapis');
+var OAuth2 = google.auth.OAuth2;
 var app = express();
 var meetings = [];
 var counter=0;
+
+var oauth2Client = new OAuth2(
+  '769575086385-820j29odvj9bqvc6okejaqk0v8l4s9tm.apps.googleusercontent.com',
+  'fEKLckkgGp46eJ1_7IoTzSYU',
+  'http://damp-eyrie-89155.herokuapp.com/dashboard'
+);
+
+var url = oauth2Client.generateAuthUrl({
+  // 'online' (default) or 'offline' (gets refresh_token)
+  access_type: 'offline',
+
+  // If you only need one scope you can pass it as string
+  scope: 'https://www.googleapis.com/auth/calendar'
+});
 
 app.use(cookieParser());
 app.use(express.static(__dirname + '/images'));
@@ -51,27 +67,27 @@ app.get("/dojoin", function(request, response){
   response.cookie('id', request.query.pw , { maxAge: 900000, httpOnly: true });
   response.cookie('person', meeting.curper++ , { maxAge: 900000, httpOnly: true });
   response.writeHead(302, {
-  'Location': '/link'
+  'Location': '/namecal'
   //add other headers here...
   });
 
 });
 
 app.get("/docreate", function(request, response){
-  console.log(request.query.a);
+  //console.log(request.query.a);
   meetings[counter] = {       //STRUCTURE OF MEETING OBJECTS
     name: request.query.a,    //NAME OF MEETING
     starttime: 0,             //MEETING START TIME
     endtime: 10,              //MEETING ENDING TIME
     pw: makeid(),             //MAKE RANDOM PASS ID
-    curper: 0
+    curper: 1
   };
   response.cookie('pos', counter, { maxAge: 900000, httpOnly: true });
   response.cookie('id', meetings[counter].pw , { maxAge: 900000, httpOnly: true });
-  response.cookie('person', '-1', { maxAge: 900000, httpOnly: true });
+  response.cookie('person', '0', { maxAge: 900000, httpOnly: true });
   counter++;
   response.writeHead(302, {
-  'Location': '/link'
+  'Location': '/namecal'
   //add other headers here...
   });
 
@@ -80,15 +96,33 @@ app.get("/docreate", function(request, response){
 
 });
 
-app.get("/link", function(request, response){
+app.get("/namecal", function(request, response){
 
-  response.sendFile(__dirname+'/link.html');
+
+
+  response.sendFile(__dirname+'/calvergecreateuser.html');
+
+});
+
+app.get("/link", function(request, response){
+  if (request.query.code == "" || request.query.code==null ) {
+    console.log(url);
+    response.writeHead(302, {
+    'Location': url
+    //add other headers here...
+    });
+}
+  else {
+    response.send("You did it!");
+
+  }
+
 
 });
 
 app.get("/debug", function(request, response){
   //response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.send(meetings[0]);
+  response.send(request.cookies);
 
 });
 
