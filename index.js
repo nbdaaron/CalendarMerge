@@ -343,5 +343,5 @@ function makeid()
 }
 
 function format(d) {
-  return d.substring(6, 10)+"-"+d.substring(0,2)+"-"+d.substring(3, 5)+" "d.substring(13, d.length-2);
+  return d.substring(6, 10)+"-"+d.substring(0,2)+"-"+d.substring(3, 5)+" "+d.substring(13, d.length-2);
 }
