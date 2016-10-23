@@ -275,7 +275,7 @@ app.get("/showtimes", function(request, response){
       res += '<div class= "container"><p>Here are the most possible times that you can meet based off our findings. To confirm one, please click the link that works best for you</p>';
       res += '<ul id="possible times">';
       for (var counter=0;counter<meetingTimes.length;counter++) {
-        res += '<li>'+meetingTimes[counter].from+' to ' + meetingTimes[counter].to + '</li>';
+        res += '<li>'+meetingTimes[counter].from.toLocaleString()+' to ' + meetingTimes[counter].to.toLocaleString() + '</li>';
       }
       res += '</ul></div></body></html>';
       console.log("Sending page");
