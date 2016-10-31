@@ -223,8 +223,8 @@ res += '<div class= "container"><h1 align="center">Dashboard</h1>'
     var options = {
     access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
     tzid: "America/New_York",
-    from: '2016-10-23',
-    to: '2016-10-31'
+    from: '2016-10-31',
+    to: '2016-11-07'
   };
 
   cronofy.readEvents(options)
@@ -282,10 +282,10 @@ app.get("/showtimes", function(request, response){
   console.log("Dates sorted");
 
     var meetingTimes = [];
-    var curmin = new Date('2016-10-23');
+    var curmin = new Date('2016-10-31');
     var datecounter= 0;
     var eventscounter = 0;
-    while (curmin < new Date('2016-10-31')) {
+    while (curmin < new Date('2016-11-07')) {
         var max = curmin.valueOf();
         while (max < allEvents[eventscounter].start && max < new Date('2016-11-07') && (max.valueOf()-curmin.valueOf() <= 1000*60*90)) {
           max = new Date(max.valueOf() + 300000);
