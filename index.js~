@@ -250,8 +250,8 @@ app.get("/showtimes", function(request, response){
     var options = {
     access_token: meetings[request.cookies.pos].people[i].accessToken.access_token,
     tzid: "America/New_York",
-    from: '2016-10-23',
-    to: '2016-10-31'
+    from: '2016-10-31',
+    to: '2016-11-07'
   };
 
   cronofy.readEvents(options)

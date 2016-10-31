@@ -40,8 +40,8 @@ app.use(express.static(__dirname + '/fonts'));
 var options = {
 access_token: 'oSLuzQlFyY8JVAQNMoOE7CWdmcIWG45l',
 tzid: "America/New_York",
-from: '2016-10-23',
-to: '2016-10-31'
+from: '2016-10-31',
+to: '2016-11-07'
 };
 
 cronofy.readEvents(options)
@@ -287,7 +287,7 @@ app.get("/showtimes", function(request, response){
     var eventscounter = 0;
     while (curmin < new Date('2016-10-31')) {
         var max = curmin.valueOf();
-        while (max < allEvents[eventscounter].start && max < new Date('2016-10-31') && (max.valueOf()-curmin.valueOf() <= 1000*60*90)) {
+        while (max < allEvents[eventscounter].start && max < new Date('2016-11-07') && (max.valueOf()-curmin.valueOf() <= 1000*60*90)) {
           max = new Date(max.valueOf() + 300000);
         }
         if (max.valueOf() - curmin.valueOf() >= 1000*60*60) {
